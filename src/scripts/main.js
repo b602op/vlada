@@ -29,6 +29,60 @@
     });
   });
 
+  // Шапка: состояние скрытия и «заморозка» на время перехода по якорю
+  var header = document.getElementById('site-header');
+  var lastScroll = window.pageYOffset;
+  var suppressHide = false; // true, пока идёт прокрутка к якорю
+
+  function keepHeaderVisible() {
+    if (header) header.style.transform = 'translateY(0)';
+  }
+
+  // Не даём шапке исчезнуть, пока идёт плавная прокрутка к секции.
+  // Ждём, пока позиция скролла перестанет меняться, и только потом
+  // возвращаем обычное поведение.
+  function suppressHideWhileScrolling() {
+    if (!header) return;
+    suppressHide = true;
+    keepHeaderVisible();
+
+    var lastY = window.pageYOffset;
+    var moved = false;
+    var stableFrames = 0;
+    var startTime = Date.now();
+
+    function finish() {
+      suppressHide = false;
+      lastScroll = window.pageYOffset;
+    }
+
+    function check() {
+      var y = window.pageYOffset;
+
+      if (Math.abs(y - lastY) >= 1) {
+        // Прокрутка идёт
+        moved = true;
+        stableFrames = 0;
+        lastY = y;
+      } else if (moved) {
+        // Прокрутка остановилась
+        stableFrames++;
+        if (stableFrames >= 3) {
+          finish();
+          return;
+        }
+      } else if (Date.now() - startTime > 200) {
+        // Прокрутка так и не началась (секция уже на экране)
+        finish();
+        return;
+      }
+
+      requestAnimationFrame(check);
+    }
+
+    requestAnimationFrame(check);
+  }
+
   // Плавная прокрутка к якорям
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
@@ -37,9 +91,9 @@
       var target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
-        var headerH = document.getElementById('site-header');
-        var offset = headerH ? headerH.offsetHeight : 0;
+        var offset = header ? header.offsetHeight : 0;
         var top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        suppressHideWhileScrolling();
         window.scrollTo({ top: top, behavior: 'smooth' });
       }
     });
@@ -147,11 +201,17 @@
   }
 
   // Показ/скрытие header при скролле
-  var header = document.getElementById('site-header');
-  var lastScroll = 0;
   if (header) {
     window.addEventListener('scroll', function () {
       var currentScroll = window.pageYOffset;
+
+      // Во время перехода по якорю шапку не скрываем
+      if (suppressHide) {
+        keepHeaderVisible();
+        lastScroll = currentScroll;
+        return;
+      }
+
       if (currentScroll > 200) {
         header.style.transform = currentScroll < lastScroll ? 'translateY(0)' : 'translateY(-100%)';
       } else {

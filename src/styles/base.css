@@ -189,7 +189,7 @@ section {
   left: 0;
   right: 0;
   z-index: 100;
-  background: var(--header-bg);
+  background: var(--bg-header);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-light);
@@ -241,7 +241,7 @@ section {
 
 /* ===== FOOTER ===== */
 .site-footer {
-  background: var(--footer-bg);
+  background: var(--bg-footer);
   color: var(--footer-text);
   padding: 32px 0;
   text-align: center;
@@ -272,6 +272,14 @@ section {
     padding: 56px 0;
   }
 
+  /* Убираем backdrop-filter у шапки: иначе выпадающее меню
+     не может размывать фон страницы (вложенный backdrop root). */
+  .site-header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--bg-header);
+  }
+
   .nav-links {
     display: none;
     position: absolute;
@@ -279,14 +287,29 @@ section {
     left: 0;
     right: 0;
     flex-direction: column;
-    background: var(--header-bg);
+    background: var(--bg-header);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
     padding: 24px;
     gap: 16px;
     border-bottom: 1px solid var(--border);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
   }
 
   .nav-links.open {
     display: flex;
+    animation: nav-drop 0.2s ease-out;
+  }
+
+  @keyframes nav-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .nav-toggle {
