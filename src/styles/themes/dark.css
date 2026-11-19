@@ -1,0 +1,24 @@
+/* src/styles/themes/dark.css */
+/* Тема Dark — графитовый фон, светлая типографика, золотистые акценты */
+
+:root {
+  --font-heading: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --bg-page: #1a1a1e;
+  --bg-card: #242428;
+  --bg-section-alt: #202024;
+  --bg-header: rgba(26, 26, 30, 0.92);
+  --bg-footer: #141416;
+  --text-primary: #f0ece6;
+  --text-secondary: #b0aaa0;
+  --text-nav: #c0b8b0;
+  --footer-text: #666;
+  --accent: #d4b088;
+  --accent-rgb: 212, 176, 136;
+  --accent-dark: #c09868;
+  --border: #333;
+  --border-light: rgba(212, 176, 136, 0.15);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.4);
+}

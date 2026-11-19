@@ -1,0 +1,65 @@
+/* src/styles/sections/complex.css */
+
+.complex {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.complex-description {
+  max-width: 720px;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.complex-developer,
+.complex-address {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.complex-developer span,
+.complex-address span {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 8px;
+}
+
+.complex-features {
+  margin-top: 32px;
+}
+
+.complex-features h3 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.feature-list--complex .feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-left: 0;
+  line-height: 1.5;
+}
+
+.feature-list--complex .feature-item::before {
+  position: static;
+  background: var(--accent);
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-size: 12px;
+  line-height: 1;
+  margin-top: 2px;
+}

@@ -1,0 +1,26 @@
+/* src/styles/themes/light.css */
+/* Тема Light Premium — молочный фон, графитовая типографика, бежевые акценты */
+
+:root {
+  /* Шрифты */
+  --font-heading: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Цвета — Light Premium */
+  --bg-page: #faf8f5;
+  --bg-card: #ffffff;
+  --bg-section-alt: #f5f0ea;
+  --bg-header: rgba(250, 248, 245, 0.92);
+  --bg-footer: #2c2c2c;
+  --text-primary: #2c2c2c;
+  --text-secondary: #5a5a5a;
+  --text-nav: #4a4a4a;
+  --footer-text: #999;
+  --accent: #c8a47a;
+  --accent-rgb: 200, 164, 122;
+  --accent-dark: #b08d64;
+  --border: #e5ddd3;
+  --border-light: rgba(200, 164, 122, 0.2);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.1);
+}

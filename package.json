@@ -1,0 +1,21 @@
+{
+  "name": "real-estate-landing-generator",
+  "version": "1.0.0",
+  "description": "Генератор статических лендингов для недвижимости. Создаёт полностью самодостаточные HTML-страницы на основе JSON-конфигов.",
+  "main": "src/generator/index.js",
+  "type": "module",
+  "scripts": {
+    "validate": "node src/validator/validate-cli.js",
+    "build": "node src/generator/build.js",
+    "preview": "node src/generator/preview.js",
+    "clean": "node src/generator/clean.js"
+  },
+  "keywords": [
+    "real-estate",
+    "landing",
+    "generator",
+    "static",
+    "seo"
+  ],
+  "license": "MIT"
+}

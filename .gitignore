@@ -1,0 +1,23 @@
+# Директории
+dist/
+node_modules/
+
+# Локальные конфиги (не обязательны)
+config/property.local.json
+config/landing.local.json
+
+# Фото-заглушки (не копировать)
+public/images/property/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Лог
+build.log

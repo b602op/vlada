@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Landing Configuration",
+  "description": "Конфигурация лендинга — темы, секции, SEO, аналитика, CRM",
+  "type": "object",
+  "properties": {
+    "theme": {
+      "type": "string",
+      "enum": ["light", "dark", "minimal"],
+      "default": "minimal"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": ["hero", "property", "gallery", "complex", "location", "agent", "contacts"]
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gallery": {
+      "type": "object",
+      "properties": {
+        "layout": {
+          "type": "string",
+          "enum": ["grid", "masonry", "carousel"],
+          "default": "grid"
+        },
+        "showProperty": {
+          "type": "boolean",
+          "default": true
+        },
+        "showComplex": {
+          "type": "boolean",
+          "default": true
+        },
+        "maxPropertyImages": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 10
+        },
+        "maxComplexImages": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 5
+        }
+      },
+      "additionalProperties": false
+    },
+    "images": {
+      "type": "object",
+      "properties": {
+        "property": {
+          "type": "object",
+          "properties": {
+            "minCount": { "type": "integer", "minimum": 0 },
+            "maxCount": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "complex": {
+          "type": "object",
+          "properties": {
+            "minCount": { "type": "integer", "minimum": 0 },
+            "maxCount": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "agent": {
+          "type": "object",
+          "properties": {
+            "minCount": { "type": "integer", "minimum": 0 },
+            "maxCount": { "type": "integer", "minimum": 1 }
+          }
+        }
+      }
+    },
+    "analytics": {
+      "type": "object",
+      "properties": {
+        "yandexMetrika": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "counterId": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "crm": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "provider": { "type": ["string", "null"] },
+        "endpoint": { "type": ["string", "null"] }
+      }
+    },
+    "seo": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "keywords": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "canonicalUrl": { "type": ["string", "null"] },
+        "ogImage": { "type": ["string", "null"] },
+        "robots": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

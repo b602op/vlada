@@ -1,0 +1,54 @@
+{
+  "theme": "light",
+
+  "sections": [
+    { "id": "hero", "enabled": true },
+    { "id": "property", "enabled": true },
+    { "id": "gallery", "enabled": true },
+    { "id": "complex", "enabled": true },
+    { "id": "location", "enabled": true },
+    { "id": "agent", "enabled": true },
+    { "id": "contacts", "enabled": true }
+  ],
+
+  "gallery": {
+    "layout": "grid",
+    "showProperty": true,
+    "showComplex": true,
+    "maxPropertyImages": 10,
+    "maxComplexImages": 5
+  },
+
+  "images": {
+    "property": { "minCount": 1, "maxCount": 10 },
+    "complex": { "minCount": 0, "maxCount": 5 },
+    "agent": { "minCount": 0, "maxCount": 1 }
+  },
+
+  "analytics": {
+    "yandexMetrika": {
+      "enabled": false,
+      "counterId": null
+    }
+  },
+
+  "crm": {
+    "enabled": false,
+    "provider": null,
+    "endpoint": null
+  },
+
+  "seo": {
+    "title": "3-комнатная квартира в ЖК «Сказка Град» — Краснодар, ул. им. Мачуги В.Н., 166/2",
+    "description": "Просторная трёхкомнатная квартира в завершённом ЖК «Сказка Град» в Карасунском округе Краснодара. Закрытая территория, развитая инфраструктура, ГК «ТОЧНО».",
+    "keywords": [
+      "трёхкомнатная квартира Краснодар",
+      "квартира ЖК Сказка Град",
+      "недвижимость Краснодар Карасунский округ",
+      "купить квартиру Сказка Град"
+    ],
+    "canonicalUrl": null,
+    "ogImage": "images/property/main.webp",
+    "robots": "index, follow"
+  }
+}

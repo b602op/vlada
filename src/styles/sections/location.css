@@ -1,0 +1,28 @@
+/* src/styles/sections/location.css */
+
+.location {
+  background: var(--bg-page);
+}
+
+.location-address {
+  max-width: 720px;
+  margin-bottom: 32px;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  box-shadow: var(--shadow);
+}
+
+.location-map {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.location-map iframe {
+  display: block;
+}
