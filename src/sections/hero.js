@@ -26,7 +26,7 @@ export function renderHero(config, sectionConfig) {
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="container">
-      <span class="hero-badge">${escapeHtml(property.title.split(' ').slice(0, 3).join(' '))}</span>
+      <span class="hero-badge">${escapeHtml(property.badge)}</span>
       <h1>${escapeHtml(property.title)}</h1>
       ${hasPrice ? `<div class="hero-price">${formatPrice(property.price, property.currency)}</div>` : ''}
       ${quickStats.length > 0 ? `

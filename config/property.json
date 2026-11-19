@@ -1,6 +1,7 @@
 {
   "property": {
     "type": "apartment",
+    "badge": "новостройка",
     "title": "ЖК «Сказка Град»",
     "price": null,
     "currency": "RUB",
