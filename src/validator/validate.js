@@ -14,7 +14,9 @@ export function loadJson(filePath) {
   if (!existsSync(filePath)) {
     throw new Error(`Файл не найден: ${filePath}`);
   }
-  const raw = readFileSync(filePath, 'utf-8');
+  // Убираем BOM: некоторые редакторы на Windows сохраняют JSON с BOM,
+  // из-за чего JSON.parse падает.
+  const raw = readFileSync(filePath, 'utf-8').replace(/^\uFEFF/, '');
   return JSON.parse(raw);
 }
 
@@ -65,10 +67,16 @@ export function validateImagePath(imagePath, imagesRoot) {
  * Проверка всех изображений в property.json
  */
 export function validatePropertyImages(propertyPath, imagesRoot) {
-  const config = loadJson(propertyPath);
   const errors = [];
   const warnings = [];
   const foundImages = { property: [], complex: [], agent: [] };
+
+  let config;
+  try {
+    config = loadJson(propertyPath);
+  } catch (e) {
+    return { errors: [`Не удалось прочитать property.json: ${e.message}`], warnings, foundImages };
+  }
 
   const groups = ['property', 'complex', 'agent'];
   for (const group of groups) {

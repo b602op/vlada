@@ -14,7 +14,9 @@
 - **CRM-форма** — интерфейс отправки заявок на внешний backend endpoint
 - **PHOTO-MANIFEST.md** — автоматический чек-лист фотографий с проверкой существования
 - **Валидация** — проверка JSON-схем, путей к файлам, типов и допустимых значений
-- **Минификация** — CSS и JS встроены в HTML
+- **Минификация CSS** — CSS встроен в HTML; JavaScript встраивается как есть
+- **Несколько лендингов** — каталог конфигурации выбирается флагом `--config`
+- **Тесты** — автоматическая проверка сборки и передачи CRM endpoint
 - **Доступность** — skip-link, aria-атрибуты, prefers-reduced-motion, фокус-стили
 - **Производительность** — lazy loading, width/height изображений, отсутствие layout shift
 
@@ -86,6 +88,8 @@ real-estate-generator/
 │       ├── main.js            ← Навигация, CRM-форма, прокрутка
 │       ├── gallery.js         ← Лайтбокс
 │       └── analytics.js       ← События Яндекс Метрики
+├── tests/
+│   └── build.test.js          ← Автотесты сборщика
 ├── dist/                      ← Результат сборки (генерируется)
 │   ├── index.html
 │   ├── images/
@@ -297,9 +301,30 @@ real-estate-generator/
 | Команда | Описание |
 |---------|----------|
 | `npm run validate` | Проверка JSON-конфигов и фотографий |
+| `npm run validate -- --config=config/<dir>` | Проверка другого каталога конфигурации |
 | `npm run build` | Сборка в `dist/` |
-| `npm run preview` | Локальный сервер для просмотра |
+| `npm run build -- --config=config/<dir>` | Сборка из другого каталога конфигурации |
+| `npm run build -- --config=config/<dir> --out=build/<dir>` | Сборка из другого каталога в другую папку |
+| `npm run preview` | Локальный сервер для просмотра `dist/` |
 | `npm run clean` | Удаление папки `dist/` |
+| `npm test` | Автоматические тесты сборщика |
+
+По умолчанию используется каталог `config/` и выход `dist/` — обратная совместимость сохранена.
+
+> **PowerShell:** если аргументы после `--` не передаются (особенность шима `npm.ps1`),
+> используйте `npm.cmd run build -- --config=config/<dir>` или `cmd /c "npm run build -- --config=config/<dir>"`.
+
+### Сборка из другого каталога конфигурации
+
+Каталог конфигурации — это папка с файлами `property.json` и `landing.json`.
+Он передаётся флагом `--config`:
+
+```bash
+npm run validate -- --config=config/my-landing
+npm run build -- --config=config/my-landing
+```
+
+Фотографии при этом берутся из общего `public/images/`.
 
 ## Публикация
 
@@ -346,10 +371,11 @@ server {
 
 ## Пример: новый лендинг для дома
 
-Создайте новый набор конфигов:
+Лендинг полностью определяется каталогом конфигурации. Создайте отдельный каталог:
 
-1. **Скопируйте** `config/property.json` → `config/property-house.json`
-2. **Измените** `config/property-house.json`:
+1. **Создайте папку** `config/my-landing/`
+2. **Скопируйте** в неё `config/property.json` и `config/landing.json`
+3. **Измените** `config/my-landing/property.json`:
 
 ```json
 {
@@ -374,16 +400,35 @@ server {
 }
 ```
 
-3. **Скопируйте** `config/landing.json` → `config/landing-house.json`
-4. **Отключите** ненужные секции (complex, location)
-5. **Запустите** с нужными путями:
+4. **Измените** `config/my-landing/landing.json` — отключите ненужные секции (например, `complex` и `location`)
+5. **Проверьте и соберите** через CLI:
 
 ```bash
-node src/validator/validate-cli.js config/property-house.json config/landing-house.json public/images
-node src/generator/build.js  # или измените пути в build.js
+npm run validate -- --config=config/my-landing
+npm run build -- --config=config/my-landing
+```
+
+Результат появится в `dist/`. Чтобы собрать несколько лендингов рядом, укажите отдельные папки:
+
+```bash
+npm run build -- --config=config/my-landing --out=build/my-landing
+npm run build -- --config=config/sakazka-grad --out=build/sakazka-grad
 ```
 
 Для полной изоляции создайте отдельную папку проекта — генератор не содержит жёстко зашитых данных объекта.
+
+## Тесты
+
+```bash
+npm test
+```
+
+Проверяются:
+
+- передача CRM endpoint с `https://` и `http://` в клиентский код без искажений;
+- сборка с альтернативным каталогом конфигурации;
+- ошибка сборки при отсутствии обязательного JS-файла;
+- ошибка сборки при отсутствии обязательного CSS-файла.
 
 ## Безопасность
 
@@ -395,7 +440,7 @@ node src/generator/build.js  # или измените пути в build.js
 
 ## Производительность
 
-- CSS и JS минифицированы и встроены в HTML
+- CSS минифицирован и встроен в HTML; JavaScript встроен без минификации (осознанно: самописная минификация на регулярных выражениях портит строки с URL)
 - Изображения: `loading="lazy"`, `decoding="async"`, `width`/`height`
 - Главное изображение hero: `fetchpriority="high"` (рекомендуется задать при добавлении)
 - Нет внешних шрифтов (используется системный стек)

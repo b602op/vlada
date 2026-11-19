@@ -1,5 +1,5 @@
 {
-  "theme": "light",
+  "theme": "dark",
 
   "sections": [
     { "id": "hero", "enabled": true },

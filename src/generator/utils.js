@@ -67,7 +67,11 @@ export function tgHref(username) {
  * Чтение JSON-файла
  */
 export function readJson(filePath) {
-  const raw = readFileSync(filePath, 'utf-8');
+  if (!existsSync(filePath)) {
+    throw new Error(`Файл не найден: ${filePath}`);
+  }
+  // Убираем BOM, который может появиться при сохранении файла в некоторых редакторах.
+  const raw = readFileSync(filePath, 'utf-8').replace(/^\uFEFF/, '');
   return JSON.parse(raw);
 }
 
@@ -127,20 +131,8 @@ export function minifyCss(css) {
     .trim();
 }
 
-/**
- * Простейшая минификация JS (без eval, без terser)
- */
-export function minifyJs(js) {
-  // Удаляем однострочные комментарии
-  let result = js
-    .replace(/\/\/.*$/gm, '')
-    // Удаляем многострочные комментарии
-    .replace(/\/\*[\s\S]*?\*\//g, '')
-    // Схлопываем пробелы в начале строк
-    .replace(/^\s+/gm, '')
-    // Убираем пустые строки
-    .replace(/\n\s*\n/g, '\n');
-  return result.trim();
-}
+// Минификация JavaScript намеренно не реализуется:
+// самописная минификация на регулярных выражениях портит строки
+// (например, URL вида "https://..."), поэтому JS встраивается как есть.
 
 export { projectRoot, __dirname };
