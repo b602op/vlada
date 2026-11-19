@@ -6,7 +6,7 @@ import { escapeHtml, formatPrice } from '../generator/utils.js';
 export function renderHero(config, sectionConfig) {
   const { property, agent, images } = config;
   const heroImages = (images?.property || []).slice(0, 3);
-  const bgImage = heroImages.length > 0 ? `/images/${heroImages[0].file}` : '';
+  const bgImage = heroImages.length > 0 ? `images/${heroImages[0].file}` : '';
   const hasPrice = property.price !== null && property.price !== undefined;
   const hasArea = property.area !== null && property.area !== undefined;
   const hasRooms = property.rooms !== null && property.rooms !== undefined;
@@ -22,7 +22,7 @@ export function renderHero(config, sectionConfig) {
   return `
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
-  <div class="hero-bg" style="${bgImage ? `background-image:url('/images/${escapeHtml(heroImages[0].file)}')` : ''}"></div>
+  <div class="hero-bg" style="${bgImage ? `background-image:url('images/${escapeHtml(heroImages[0].file)}')` : ''}"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="container">

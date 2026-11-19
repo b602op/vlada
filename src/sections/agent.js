@@ -20,7 +20,7 @@ export function renderAgent(config) {
     <h2 class="section-title">Ваш риэлтор</h2>
     <div class="agent-card">
       ${agentPhoto ? `
-        <img class="agent-photo" src="/images/${escapeHtml(agentPhoto.file)}" alt="${escapeHtml(agentPhoto.alt)}" width="150" height="150" loading="lazy" decoding="async">
+        <img class="agent-photo" src="images/${escapeHtml(agentPhoto.file)}" alt="${escapeHtml(agentPhoto.alt)}" width="150" height="150" loading="lazy" decoding="async">
       ` : `
         <div class="agent-avatar-placeholder" aria-hidden="true">${escapeHtml(agent.name.charAt(0))}</div>
       `}

@@ -257,7 +257,7 @@ export function buildLanding(options = {}) {
 
   const faviconPath = resolve(root, 'public/favicon.ico');
   const faviconLink = existsSync(faviconPath)
-    ? '<link rel="icon" href="/favicon.ico" type="image/x-icon">'
+    ? '<link rel="icon" href="favicon.ico" type="image/x-icon">'
     : '';
 
   const jsonLd = generateAllJsonLd(mergedConfig);

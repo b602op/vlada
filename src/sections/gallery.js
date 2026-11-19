@@ -34,7 +34,7 @@ export function renderGallery(config, sectionConfig, landingConfig) {
         <div class="gallery-grid">
           ${propertyImages.map(img => `
             <div class="gallery-item" data-index="${allImages.indexOf(img)}" data-caption="${escapeHtml(img.alt)}" tabindex="0" role="button" aria-label="Открыть: ${escapeHtml(img.alt)}">
-              <img src="/images/${escapeHtml(img.file)}" alt="${escapeHtml(img.alt)}" loading="lazy" width="800" height="600" decoding="async">
+              <img src="images/${escapeHtml(img.file)}" alt="${escapeHtml(img.alt)}" loading="lazy" width="800" height="600" decoding="async">
             </div>`).join('')}
         </div>
       </div>`;
@@ -47,7 +47,7 @@ export function renderGallery(config, sectionConfig, landingConfig) {
         <div class="gallery-grid">
           ${complexImages.map(img => `
             <div class="gallery-item" data-index="${allImages.indexOf(img)}" data-caption="${escapeHtml(img.alt)}" tabindex="0" role="button" aria-label="Открыть: ${escapeHtml(img.alt)}">
-              <img src="/images/${escapeHtml(img.file)}" alt="${escapeHtml(img.alt)}" loading="lazy" width="800" height="600" decoding="async">
+              <img src="images/${escapeHtml(img.file)}" alt="${escapeHtml(img.alt)}" loading="lazy" width="800" height="600" decoding="async">
             </div>`).join('')}
         </div>
       </div>`;
