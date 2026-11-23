@@ -5,113 +5,164 @@
 }
 
 .agent-card {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-  max-width: 800px;
+  max-width: 640px;
+  margin: 0 auto;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 48px;
+  padding: 40px 48px;
   box-shadow: var(--shadow);
 }
 
-.agent-photo,
-.agent-avatar-placeholder {
-  width: 150px;
-  height: 150px;
-  min-width: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.agent-avatar-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--accent);
-  color: #fff;
-  font-size: 48px;
-  font-weight: 700;
-  font-family: var(--font-heading);
-}
-
-.agent-info {
-  flex: 1;
-}
-
-.agent-info h3 {
-  font-family: var(--font-heading);
-  font-size: 26px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: var(--text-primary);
-}
-
-.agent-description {
+.agent-form-intro {
   color: var(--text-secondary);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   line-height: 1.7;
 }
 
-.agent-contacts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
+/* Общие стили полей формы заявки */
+.form-group {
+  margin-bottom: 20px;
 }
 
-.agent-phone-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
-  transition: color 0.2s;
-}
-
-.agent-phone-link:hover,
-.agent-phone-link:focus-visible {
-  color: var(--accent);
-}
-
-.agent-messenger-link {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 20px;
-  border-radius: 100px;
+.form-group label,
+.form-group legend {
+  display: block;
+  margin-bottom: 8px;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.2s;
+  color: var(--text-secondary);
 }
 
-.agent-messenger-link.wa {
-  background: #25D366;
-  color: #fff;
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
 }
 
-.agent-messenger-link.wa:hover {
-  background: #1da851;
+.form-group input[type="text"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
 }
 
-.agent-messenger-link.tg {
-  background: #229ED9;
-  color: #fff;
+.form-group .error-msg {
+  display: block;
+  min-height: 18px;
+  font-size: 12px;
+  color: #c0392b;
+  margin-top: 4px;
 }
 
-.agent-messenger-link.tg:hover {
-  background: #1a85b8;
+.form-status {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.form-status:empty {
+  display: none;
+}
+
+.form-status--success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-status--error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Способы связи */
+.contact-method {
+  border: 0;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.contact-method legend {
+  display: block;
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.contact-method-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.contact-method .contact-method-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.contact-method .contact-method-option:hover {
+  border-color: var(--accent);
+}
+
+.contact-method .contact-method-option:has(input:checked) {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.08);
+}
+
+.contact-method .contact-method-option input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.contact-method .contact-method-option input:checked + span {
+  font-weight: 600;
+}
+
+.agent-form button[type="submit"][disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
   .agent-card {
-    flex-direction: column;
-    text-align: center;
     padding: 32px 24px;
   }
+}
 
-  .agent-contacts {
-    justify-content: center;
+@media (max-width: 480px) {
+  .contact-method-options {
+    grid-template-columns: 1fr;
   }
 }

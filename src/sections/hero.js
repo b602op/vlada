@@ -34,7 +34,7 @@ export function renderHero(config, sectionConfig) {
         ${quickStats.map(s => `<span>${escapeHtml(s)}</span>`).join('')}
       </div>` : ''}
       <div class="hero-actions">
-        <a href="#contacts" class="btn btn-primary">Оставить заявку</a>
+        <a href="#agent" class="btn btn-primary">Оставить заявку</a>
         <a href="#property" class="btn btn-outline">Подробнее</a>
       </div>
     </div>

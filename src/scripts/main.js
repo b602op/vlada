@@ -99,104 +99,121 @@
     });
   });
 
-  // CRM-форма
-  var form = document.getElementById('lead-form');
-  if (form) {
-    var config = window.__CRM_CONFIG__ || {};
-    var endpoint = config.endpoint || '';
-    var submitBtn = document.getElementById('form-submit');
-    var statusEl = document.getElementById('form-status');
+  // CRM-формы заявки (блок риэлтора и контакты)
+  var leadForms = document.querySelectorAll('.lead-form');
+  if (leadForms.length > 0) {
+    var crmConfig = window.__CRM_CONFIG__ || {};
+    var endpoint = crmConfig.endpoint || '';
+    var analyticsEnabled = !!(window.__ANALYTICS_CONFIG__ && window.__ANALYTICS_CONFIG__.enabled);
 
-    // Track form start
-    if (window.__ANALYTICS_CONFIG__ && window.__ANALYTICS_CONFIG__.enabled) {
-      var trackEvent = (function () {
-        var c = window.yaCounter;
-        return function (cat, act) {
-          if (c && c.hit) c.hit(cat + ':' + act);
+    var trackFormEvent = function (action) {
+      if (!analyticsEnabled) return;
+      var counter = window.yaCounter;
+      if (counter && counter.hit) counter.hit('form:' + action);
+    };
+
+    leadForms.forEach(function (form) {
+      var submitBtn = form.querySelector('[type="submit"]');
+      var statusEl = form.querySelector('.form-status');
+      var nameEl = form.querySelector('[name="name"]');
+      var phoneEl = form.querySelector('[name="phone"]');
+      var commentEl = form.querySelector('[name="comment"]');
+      var errName = form.querySelector('[data-error="name"]');
+      var errPhone = form.querySelector('[data-error="phone"]');
+
+      // Track form start
+      trackFormEvent('form_start');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        if (submitBtn.disabled) return; // Защита от повторной отправки
+
+        var hasErrors = false;
+
+        // Сброс ошибок
+        if (errName) errName.textContent = '';
+        if (errPhone) errPhone.textContent = '';
+        if (nameEl) nameEl.style.borderColor = '';
+        if (phoneEl) phoneEl.style.borderColor = '';
+
+        // Валидация
+        var name = nameEl ? nameEl.value.trim() : '';
+        var phone = phoneEl ? phoneEl.value.trim() : '';
+
+        if (!name || name.length < 2) {
+          if (errName) errName.textContent = 'Введите ваше имя';
+          if (nameEl) nameEl.style.borderColor = '#c0392b';
+          hasErrors = true;
+        }
+
+        if (!phone || phone.replace(/[^+\d]/g, '').length < 6) {
+          if (errPhone) errPhone.textContent = 'Введите корректный номер телефона';
+          if (phoneEl) phoneEl.style.borderColor = '#c0392b';
+          hasErrors = true;
+        }
+
+        if (hasErrors) return;
+
+        // Способы связи (чекбоксы, можно несколько)
+        var methodEls = form.querySelectorAll('[name="contactMethods"]:checked');
+
+        // Отправка
+        var data = {
+          name: name,
+          phone: phone,
+          comment: commentEl ? commentEl.value.trim() : ''
         };
-      })();
-      trackEvent('form', 'form_start');
-    }
+        if (methodEls.length > 0) {
+          data.contactMethods = Array.prototype.map.call(methodEls, function (el) {
+            return el.value;
+          });
+        }
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      if (submitBtn.disabled) return; // Защита от повторной отправки
-
-      var nameEl = document.getElementById('form-name');
-      var phoneEl = document.getElementById('form-phone');
-      var errName = document.getElementById('err-name');
-      var errPhone = document.getElementById('err-phone');
-      var hasErrors = false;
-
-      // Сброс ошибок
-      errName.textContent = '';
-      errPhone.textContent = '';
-      nameEl.style.borderColor = '';
-      phoneEl.style.borderColor = '';
-
-      // Валидация
-      var name = nameEl.value.trim();
-      var phone = phoneEl.value.trim();
-
-      if (!name || name.length < 2) {
-        errName.textContent = 'Введите ваше имя';
-        nameEl.style.borderColor = '#c0392b';
-        hasErrors = true;
-      }
-
-      if (!phone || phone.replace(/[^+\d]/g, '').length < 6) {
-        errPhone.textContent = 'Введите корректный номер телефона';
-        phoneEl.style.borderColor = '#c0392b';
-        hasErrors = true;
-      }
-
-      if (hasErrors) return;
-
-      // Отправка
-      var data = {
-        name: name,
-        phone: phone,
-        comment: document.getElementById('form-comment') ? document.getElementById('form-comment').value.trim() : ''
-      };
-
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Отправка...';
-      statusEl.textContent = '';
-      statusEl.className = 'form-status';
-
-      fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-        .then(function (res) {
-          if (res.ok) {
-            statusEl.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
-            statusEl.className = 'form-status form-status--success';
-            form.reset();
-            if (window.__ANALYTICS_CONFIG__ && window.__ANALYTICS_CONFIG__.enabled) {
-              var trackEvent = (function () {
-                var c = window.yaCounter;
-                return function (cat, act) {
-                  if (c && c.hit) c.hit(cat + ':' + act);
-                };
-              })();
-              trackEvent('form', 'form_submit');
-            }
-          } else {
-            throw new Error('Сервер вернул ошибку: ' + res.status);
+        if (!endpoint) {
+          if (statusEl) {
+            statusEl.textContent = '❌ Отправка заявки пока не настроена. Позвоните нам по телефону.';
+            statusEl.className = 'form-status form-status--error';
           }
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Отправка...';
+        if (statusEl) {
+          statusEl.textContent = '';
+          statusEl.className = 'form-status';
+        }
+
+        fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         })
-        .catch(function (err) {
-          statusEl.textContent = '❌ Ошибка при отправке. Попробуйте позже или свяжитесь по телефону.';
-          statusEl.className = 'form-status form-status--error';
-          console.error('CRM submit error:', err);
-        })
-        .finally(function () {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Отправить заявку';
-        });
+          .then(function (res) {
+            if (res.ok) {
+              if (statusEl) {
+                statusEl.textContent = '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
+                statusEl.className = 'form-status form-status--success';
+              }
+              form.reset();
+              trackFormEvent('form_submit');
+            } else {
+              throw new Error('Сервер вернул ошибку: ' + res.status);
+            }
+          })
+          .catch(function (err) {
+            if (statusEl) {
+              statusEl.textContent = '❌ Ошибка при отправке. Попробуйте позже или свяжитесь по телефону.';
+              statusEl.className = 'form-status form-status--error';
+            }
+            console.error('CRM submit error:', err);
+          })
+          .finally(function () {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Отправить заявку';
+          });
+      });
     });
   }
 

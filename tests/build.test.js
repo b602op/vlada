@@ -14,7 +14,7 @@ import {
   DEFAULT_JS_FILES,
 } from '../src/generator/build.js';
 
-const SECTION_IDS = ['hero', 'property', 'gallery', 'complex', 'location', 'agent', 'contacts'];
+const SECTION_IDS = ['hero', 'property', 'gallery', 'complex', 'location', 'agent'];
 
 /**
  * Создаёт временный каталог конфигурации с валидными property.json и landing.json.
@@ -113,7 +113,7 @@ test('CRM endpoint с HTTPS передаётся в клиентский код 
     html.includes('{"endpoint":"https://api.example.com/v1/leads"}'),
     'endpoint должен быть корректным JSON-литералом'
   );
-  assert.ok(html.includes('id="lead-form"'), 'форма заявки должна быть отрисована');
+  assert.ok(html.includes('id="agent-form"'), 'форма заявки должна быть отрисована');
 });
 
 test('CRM endpoint с HTTP передаётся в клиентский код без искажений', (t) => {

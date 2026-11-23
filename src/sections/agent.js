@@ -1,46 +1,60 @@
 // src/sections/agent.js
-// Секция риэлтора
+// Секция заявки на связь с риэлтором
 
 import { escapeHtml } from '../generator/utils.js';
 
 export function renderAgent(config) {
-  const { agent, images } = config;
+  const { agent } = config;
   if (!agent || !agent.name) return '';
 
-  // Ищем фото агента
-  let agentPhoto = null;
-  if (images?.agent && images.agent.length > 0) {
-    agentPhoto = images.agent[0];
-  }
-
   return `
-<!-- ===== AGENT ===== -->
+<!-- ===== AGENT / LEAD FORM ===== -->
 <section class="agent" id="agent">
   <div class="container">
-    <h2 class="section-title">Ваш риэлтор</h2>
+    <h2 class="section-title">Оставьте заявку</h2>
     <div class="agent-card">
-      ${agentPhoto ? `
-        <img class="agent-photo" src="images/${escapeHtml(agentPhoto.file)}" alt="${escapeHtml(agentPhoto.alt)}" width="150" height="150" loading="lazy" decoding="async">
-      ` : `
-        <div class="agent-avatar-placeholder" aria-hidden="true">${escapeHtml(agent.name.charAt(0))}</div>
-      `}
-      <div class="agent-info">
-        <h3>${escapeHtml(agent.name)}</h3>
-        ${agent.description ? `<p class="agent-description">${escapeHtml(agent.description)}</p>` : ''}
-        <div class="agent-contacts">
-          <a href="tel:${escapeHtml(agent.phone.replace(/[^+\d]/g, ''))}" class="agent-phone-link" data-action="phone-click">
-            📞 ${escapeHtml(agent.phone)}
-          </a>
-          ${agent.whatsapp ? `
-            <a href="https://wa.me/${escapeHtml(agent.whatsapp.replace(/[^+\d]/g, ''))}" class="agent-messenger-link wa" target="_blank" rel="noopener noreferrer" data-action="whatsapp-click">
-              WhatsApp
-            </a>` : ''}
-          ${agent.telegram ? `
-            <a href="https://t.me/${escapeHtml(agent.telegram.replace(/^@/, ''))}" class="agent-messenger-link tg" target="_blank" rel="noopener noreferrer" data-action="telegram-click">
-              Telegram
-            </a>` : ''}
+      <p class="agent-form-intro">
+        Оставьте свои контакты — ${escapeHtml(agent.name)} свяжется с вами удобным способом и ответит на вопросы.
+      </p>
+      <form class="lead-form agent-form" id="agent-form" novalidate>
+        <div class="form-group">
+          <label for="agent-name">Ваше имя *</label>
+          <input type="text" id="agent-name" name="name" required autocomplete="name" placeholder="Иван Иванов">
+          <span class="error-msg" data-error="name"></span>
         </div>
-      </div>
+        <div class="form-group">
+          <label for="agent-phone">Телефон *</label>
+          <input type="tel" id="agent-phone" name="phone" required autocomplete="tel" placeholder="+7 (___) ___-__-__">
+          <span class="error-msg" data-error="phone"></span>
+        </div>
+        <fieldset class="form-group contact-method">
+          <legend>Удобный способ связи (можно выбрать несколько)</legend>
+          <div class="contact-method-options">
+            <label class="contact-method-option">
+              <input type="checkbox" name="contactMethods" value="telegram">
+              <span>Telegram</span>
+            </label>
+            <label class="contact-method-option">
+              <input type="checkbox" name="contactMethods" value="max">
+              <span>MAX</span>
+            </label>
+            <label class="contact-method-option">
+              <input type="checkbox" name="contactMethods" value="whatsapp">
+              <span>WhatsApp</span>
+            </label>
+            <label class="contact-method-option">
+              <input type="checkbox" name="contactMethods" value="phone">
+              <span>Звонок на телефон</span>
+            </label>
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <label for="agent-comment">Комментарий (необязательно)</label>
+          <textarea id="agent-comment" name="comment" rows="3" placeholder="Удобное время для связи или короткое сообщение для риэлтора"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Отправить заявку</button>
+        <div class="form-status" aria-live="polite"></div>
+      </form>
     </div>
   </div>
 </section>`;

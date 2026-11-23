@@ -24,7 +24,6 @@ import { renderGallery } from '../sections/gallery.js';
 import { renderComplex } from '../sections/complex.js';
 import { renderLocation } from '../sections/location.js';
 import { renderAgent } from '../sections/agent.js';
-import { renderContacts } from '../sections/contacts.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -45,10 +44,9 @@ export const DEFAULT_CSS_FILES = [
   'src/styles/sections/complex.css',
   'src/styles/sections/location.css',
   'src/styles/sections/agent.css',
-  'src/styles/sections/contacts.css',
 ];
 
-const VALID_SECTION_IDS = ['hero', 'property', 'gallery', 'complex', 'location', 'agent', 'contacts'];
+const VALID_SECTION_IDS = ['hero', 'property', 'gallery', 'complex', 'location', 'agent'];
 
 const SECTION_LABELS = {
   hero: '',
@@ -56,8 +54,7 @@ const SECTION_LABELS = {
   gallery: 'Фотографии',
   complex: 'Комплекс',
   location: 'Расположение',
-  agent: 'Риэлтор',
-  contacts: 'Контакты',
+  agent: 'Заявка',
 };
 
 const SECTION_RENDERERS = {
@@ -67,7 +64,6 @@ const SECTION_RENDERERS = {
   complex: renderComplex,
   location: renderLocation,
   agent: renderAgent,
-  contacts: renderContacts,
 };
 
 /**

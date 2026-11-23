@@ -17,7 +17,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "enum": ["hero", "property", "gallery", "complex", "location", "agent", "contacts"]
+            "enum": ["hero", "property", "gallery", "complex", "location", "agent"]
           },
           "enabled": {
             "type": "boolean",

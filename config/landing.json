@@ -1,6 +1,6 @@
 
 {
-  "theme": "light",
+  "theme": "minimal",
   "sections": [
     { "id": "hero", "enabled": true },
     { "id": "property", "enabled": true },

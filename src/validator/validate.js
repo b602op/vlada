@@ -221,7 +221,7 @@ export function validateLandingConfig(landingPath) {
   }
 
   // Секции
-  const validSectionIds = ['hero', 'property', 'gallery', 'complex', 'location', 'agent', 'contacts'];
+  const validSectionIds = ['hero', 'property', 'gallery', 'complex', 'location', 'agent'];
   if (!config.sections || config.sections.length === 0) {
     warnings.push('Секции не заданы — будут использованы все по умолчанию');
   } else {

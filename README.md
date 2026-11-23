@@ -6,7 +6,7 @@
 
 - **Полностью статический HTML** — работает на любом хостинге без Node.js
 - **JSON-конфигурация** — весь контент и настройки в двух JSON-файлах
-- **7 управляемых секций** — hero, property, gallery, complex, location, agent, contacts
+- **6 управляемых секций** — hero, property, gallery, complex, location, agent
 - **3 темы оформления** — light premium, dark, minimal (переключение через JSON)
 - **Галерея с лайтбоксом** — полноэкранный просмотр, клавиатура, мобильная адаптация
 - **SEO** — title, description, canonical, Open Graph, JSON-LD (Schema.org), sitemap.xml, robots.txt
@@ -74,7 +74,6 @@ real-estate-generator/
 │   │   ├── complex.js
 │   │   ├── location.js
 │   │   ├── agent.js
-│   │   └── contacts.js
 │   ├── templates/
 │   │   └── landing.html       ← HTML-шаблон
 │   ├── styles/
@@ -200,8 +199,7 @@ real-estate-generator/
     { "id": "gallery",   "enabled": true },
     { "id": "complex",   "enabled": true },
     { "id": "location",  "enabled": true },
-    { "id": "agent",     "enabled": true },
-    { "id": "contacts",  "enabled": true }
+    { "id": "agent",     "enabled": true }
   ]
 }
 ```
