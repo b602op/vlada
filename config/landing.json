@@ -1,6 +1,6 @@
-{
-  "theme": "dark",
 
+{
+  "theme": "light",
   "sections": [
     { "id": "hero", "enabled": true },
     { "id": "property", "enabled": true },
@@ -10,7 +10,6 @@
     { "id": "agent", "enabled": true },
     { "id": "contacts", "enabled": true }
   ],
-
   "gallery": {
     "layout": "grid",
     "showProperty": true,
@@ -18,34 +17,30 @@
     "maxPropertyImages": 10,
     "maxComplexImages": 5
   },
-
   "images": {
     "property": { "minCount": 1, "maxCount": 10 },
     "complex": { "minCount": 0, "maxCount": 5 },
     "agent": { "minCount": 0, "maxCount": 1 }
   },
-
   "analytics": {
     "yandexMetrika": {
       "enabled": false,
       "counterId": null
     }
   },
-
   "crm": {
     "enabled": false,
     "provider": null,
     "endpoint": null
   },
-
   "seo": {
-    "title": "3-комнатная квартира в ЖК «Сказка Град» — Краснодар, ул. им. Мачуги В.Н., 166/2",
-    "description": "Просторная трёхкомнатная квартира в завершённом ЖК «Сказка Град» в Карасунском округе Краснодара. Закрытая территория, развитая инфраструктура, ГК «ТОЧНО».",
+    "title": "Квартиры в ЖК «Форма» в Краснодаре — от 2,9 млн ₽, ипотека от 2,5%",
+    "description": "ЖК «Форма» — первый ЖК в Краснодаре с элементами бизнес-класса: низкоэтажная застройка, парк 20 га, своя инфраструктура, квартиры с ремонтом в подарок. Застройщик ГК «НВМ», покупка по 214-ФЗ через эскроу-счёт.",
     "keywords": [
-      "трёхкомнатная квартира Краснодар",
-      "квартира ЖК Сказка Град",
-      "недвижимость Краснодар Карасунский округ",
-      "купить квартиру Сказка Град"
+      "ЖК Форма Краснодар",
+      "квартиры в Краснодаре от застройщика",
+      "недвижимость бизнес-класса Краснодар",
+      "купить квартиру ЖК Форма"
     ],
     "canonicalUrl": null,
     "ogImage": "images/property/main.webp",

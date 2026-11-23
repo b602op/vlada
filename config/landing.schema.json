@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Landing Configuration",
-  "description": "Конфигурация лендинга — темы, секции, SEO, аналитика, CRM",
+  "description": "Конфигурация лендинга ЖК «Форма» (Краснодар) — темы, секции, SEO, аналитика, CRM",
   "type": "object",
   "properties": {
     "theme": {
@@ -51,7 +51,7 @@
         "maxComplexImages": {
           "type": "integer",
           "minimum": 1,
-          "default": 5
+          "default": 10
         }
       },
       "additionalProperties": false
@@ -106,15 +106,35 @@
       "type": "object",
       "required": ["title", "description"],
       "properties": {
-        "title": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "default": "ЖК «Форма» — квартиры в Краснодаре от 2,9 млн ₽, ипотека от 2,5%"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "default": "ЖК «Форма» — первый ЖК в Краснодаре с элементами бизнес-класса: низкоэтажная застройка, парк 20 га, своя школа и детские сады, квартиры с ремонтом в подарок. Застройщик ГК «НВМ», покупка по 214-ФЗ через эскроу-счёт."
+        },
         "keywords": {
           "type": ["array", "null"],
-          "items": { "type": "string" }
+          "items": { "type": "string" },
+          "default": [
+            "ЖК Форма Краснодар",
+            "квартиры в Краснодаре от застройщика",
+            "недвижимость бизнес-класса Краснодар",
+            "купить квартиру ЖК Форма"
+          ]
         },
         "canonicalUrl": { "type": ["string", "null"] },
-        "ogImage": { "type": ["string", "null"] },
-        "robots": { "type": ["string", "null"] }
+        "ogImage": {
+          "type": ["string", "null"],
+          "default": "images/property/main.webp"
+        },
+        "robots": {
+          "type": ["string", "null"],
+          "default": "index, follow"
+        }
       },
       "additionalProperties": false
     }

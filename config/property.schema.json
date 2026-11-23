@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Property Configuration",
-  "description": "Конфигурация объекта недвижимости",
+  "description": "Конфигурация объекта недвижимости (ЖК «Форма», Краснодар)",
   "type": "object",
   "required": ["property", "agent"],
   "properties": {
@@ -17,27 +17,34 @@
         "title": {
           "type": "string",
           "minLength": 1,
-          "description": "Название/заголовок объекта"
+          "description": "Название/заголовок объекта",
+          "default": "ЖК «Форма»"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Бейдж объекта (например, «новостройка»)"
         },
         "price": {
           "type": ["integer", "null"],
           "minimum": 0,
-          "description": "Цена (null если не указана)"
+          "description": "Стартовая цена (null если не указана)",
+          "default": 2900000
         },
         "currency": {
           "type": "string",
           "enum": ["RUB", "USD", "EUR"],
-          "description": "Валюта цены"
+          "description": "Валюта цены",
+          "default": "RUB"
         },
         "rooms": {
           "type": ["integer", "null"],
           "minimum": 0,
-          "description": "Количество комнат (null если не указано)"
+          "description": "Количество комнат (null, если лендинг охватывает все планировки)"
         },
         "area": {
-          "type": ["integer", "null"],
+          "type": ["number", "null"],
           "minimum": 0,
-          "description": "Площадь в м² (null если не указано)"
+          "description": "Площадь в м² (null если не указано); допускает дробные значения, например 22.6"
         },
         "floor": {
           "type": ["integer", "null"],
@@ -47,11 +54,13 @@
         "totalFloors": {
           "type": ["integer", "null"],
           "minimum": 0,
-          "description": "Общая этажность здания (null если не указано)"
+          "description": "Общая этажность здания (null если не указано)",
+          "default": 19
         },
         "address": {
           "type": "string",
-          "description": "Адрес объекта"
+          "description": "Адрес объекта",
+          "default": "г. Краснодар, ЖК «Форма»"
         },
         "description": {
           "type": "string",
@@ -64,10 +73,8 @@
         },
         "characteristics": {
           "type": ["object", "null"],
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Дополнительные характеристики в формате ключ: значение"
+          "additionalProperties": true,
+          "description": "Дополнительные характеристики. Допускает строки, а также вложенные объекты и массивы — например, таблицу цен: prices: [{ type, area, price }], mortgage, bonus"
         }
       },
       "additionalProperties": false
@@ -89,8 +96,16 @@
       "type": ["object", "null"],
       "required": ["name"],
       "properties": {
-        "name": { "type": "string", "minLength": 1 },
-        "developer": { "type": ["string", "null"] },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "default": "ЖК «Форма»"
+        },
+        "developer": {
+          "type": ["string", "null"],
+          "description": "Застройщик",
+          "default": "ГК «НВМ»"
+        },
         "address": { "type": ["string", "null"] },
         "description": { "type": ["string", "null"] },
         "features": {
